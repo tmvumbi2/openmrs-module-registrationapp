@@ -20,7 +20,7 @@ function importMpiPatient(id) {
 var extractPatientUuid = function(_data) {
     var variables = _data.split("&");
     for (var variable of variables) {
-      if (variable.split("=")[0] == "patienUuid") {
+      if (variable.split("=")[0] == "patientUuid") {
           return variable.split("=")[1];
       }
     }

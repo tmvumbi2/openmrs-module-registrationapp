@@ -107,7 +107,7 @@ public class RegisterPatientFragmentController {
     public FragmentActionResult submit(UiSessionContext sessionContext, @RequestParam(value="appId") AppDescriptor app,
                             @SpringBean("registrationCoreService") RegistrationCoreService registrationService,
                             @ModelAttribute("patient") @BindParams Patient patient,
-                            @RequestParam(value = "patienIdNumber", required = false) String patienIdNumber,
+                            @RequestParam(value = "patientIdNumber", required = false) String patientIdNumber,
                             @ModelAttribute("personName") @BindParams PersonName name,
                             @ModelAttribute("personAddress") @BindParams PersonAddress address,
                             @RequestParam(value="birthdateYears", required = false) Integer birthdateYears,
@@ -124,78 +124,33 @@ public class RegisterPatientFragmentController {
                             @SpringBean("emrApiProperties") EmrApiProperties emrApiProperties,
                             @SpringBean("patientValidator") PatientValidator patientValidator, UiUtils ui) throws Exception {
 
-        if (patienIdNumber != null && !patienIdNumber.equals("")) {
-            return editPatient(
-                    sessionContext,
-                    app,
-                    registrationService,
-                    patient,
-                    patienIdNumber,
-                    name,
-                    address,
-                    birthdateYears,
-                    birthdateMonths,
-                    registrationDate,
-                    unknown,
-                    patientIdentifier,
-                    request,
-                    messageSourceService,
-                    encounterService,
-                    obsService,
-                    conceptService,
-                    patientService,
-                    emrApiProperties,
-                    patientValidator,
-                    ui
+        if (patientIdNumber != null && !patientIdNumber.equals("")) {
+            return editPatient(sessionContext, app, registrationService, patient, patientIdNumber,
+                    name, address, birthdateYears, birthdateMonths, registrationDate, unknown,
+                    patientIdentifier, request, messageSourceService, encounterService, obsService,
+                    conceptService, patientService, emrApiProperties, patientValidator, ui
                 );
         } else {
-            return addPatient(
-                    sessionContext,
-                    app,
-                    registrationService,
-                    patient,
-                    name,
-                    address,
-                    birthdateYears,
-                    birthdateMonths,
-                    registrationDate,
-                    unknown,
-                    patientIdentifier,
-                    request,
-                    messageSourceService,
-                    encounterService,
-                    obsService,
-                    conceptService,
-                    patientService,
-                    emrApiProperties,
-                    patientValidator,
-                    ui
+            return addPatient(sessionContext, app, registrationService, patient, name, address,
+                    birthdateYears, birthdateMonths, registrationDate, unknown, patientIdentifier,
+                    request, messageSourceService, encounterService, obsService, conceptService,
+                    patientService, emrApiProperties, patientValidator, ui
                 );
         }
     }
 
     public FragmentActionResult editPatient(UiSessionContext sessionContext, AppDescriptor app,
-                            RegistrationCoreService registrationService,
-                            Patient patient,
-                            String patienIdNumber,
-                            PersonName name,
-                            PersonAddress address,
-                            Integer birthdateYears,
-                            Integer birthdateMonths,
-                            Date registrationDate,
-                            Boolean unknown,
-                            String patientIdentifier,
-                            HttpServletRequest request,
-                            MessageSourceService messageSourceService,
-                            EncounterService encounterService,
-                            ObsService obsService,
-                            ConceptService conceptService,
-                            PatientService patientService,
-                            EmrApiProperties emrApiProperties,
-                            PatientValidator patientValidator, UiUtils ui) throws Exception {
+            RegistrationCoreService registrationService, Patient patient, String patientIdNumber,
+            PersonName name, PersonAddress address, Integer birthdateYears, Integer birthdateMonths,
+            Date registrationDate, Boolean unknown, String patientIdentifier,
+            HttpServletRequest request, MessageSourceService messageSourceService,
+            EncounterService encounterService, ObsService obsService, ConceptService conceptService,
+            PatientService patientService, EmrApiProperties emrApiProperties,
+            PatientValidator patientValidator, UiUtils ui) throws Exception {
+
         NavigableFormStructure formStructure = RegisterPatientFormBuilder.buildFormStructure(app);
 
-        Patient existingPatient = patientService.getPatient(Integer.parseInt(patienIdNumber));
+        Patient existingPatient = patientService.getPatient(Integer.parseInt(patientIdNumber));
 
         if (unknown != null && unknown) {
             // TODO make "UNKNOWN" be configurable
@@ -284,24 +239,13 @@ public class RegisterPatientFragmentController {
     }
 
     public FragmentActionResult addPatient(UiSessionContext sessionContext, AppDescriptor app,
-                            RegistrationCoreService registrationService,
-                            Patient patient,
-                            PersonName name,
-                            PersonAddress address,
-                            Integer birthdateYears,
-                            Integer birthdateMonths,
-                            Date registrationDate,
-                            Boolean unknown,
-                            String patientIdentifier,
-                            HttpServletRequest request,
-                            MessageSourceService messageSourceService,
-                            EncounterService encounterService,
-                            ObsService obsService,
-                            ConceptService conceptService,
-                            PatientService patientService,
-                            EmrApiProperties emrApiProperties,
-                            PatientValidator patientValidator, UiUtils ui) throws Exception {
-
+            RegistrationCoreService registrationService, Patient patient, PersonName name,
+            PersonAddress address, Integer birthdateYears, Integer birthdateMonths,
+            Date registrationDate, Boolean unknown, String patientIdentifier,
+            HttpServletRequest request, MessageSourceService messageSourceService,
+            EncounterService encounterService, ObsService obsService, ConceptService conceptService,
+            PatientService patientService, EmrApiProperties emrApiProperties,
+            PatientValidator patientValidator, UiUtils ui) throws Exception {
 
         NavigableFormStructure formStructure = RegisterPatientFormBuilder.buildFormStructure(app);
 
